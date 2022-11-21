@@ -1,0 +1,31 @@
+body {
+    margin: 0;
+    color: rgba(193, 201, 203, 0.94);
+    background-color: #282c34;
+    font-family: sans-serif, "Calibri Light";
+}
+
+.page {
+    align-items: center;
+    display: flex;
+    height: 50vh;
+    justify-content: center;
+    flex-direction: column;
+}
+
+input {
+    color: rgba(193, 201, 203, 0.94);
+    background-color: rgba(30, 34, 38, 0.73);
+    font-family: sans-serif, "Calibri Light";
+    border-style: solid;
+    border-color: rgb(31, 43, 47);
+}
+
+button {
+    display: flex;
+    margin: 20px auto 0;
+    background-color: #1f2025;
+    color: #a4a9a9;
+    border-color: #393a44;
+    border-style: solid;
+}

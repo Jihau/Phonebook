@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import Persons from "./components/Persons";
 import Filter from "./components/Filter";
+import "./Phonebook.css";
 
 const App = () => {
     const [persons, setPersons] = useState([
@@ -54,10 +55,10 @@ const App = () => {
     const nameToShow = showName ? persons : persons.filter(person => person.important)
 
     return (
-        <div>
+        <div className="page">
             <h2>Phonebook</h2>
             <Filter onChange={handleFilterChange} value={filter} />
-            <h2>add a new</h2>
+            <h2>Add a new</h2>
             <form onSubmit={addName}>
                 <div>
                     name: <input
