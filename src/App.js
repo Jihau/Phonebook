@@ -19,8 +19,8 @@ const App = () => {
     const [filterPersons, setFilterPersons] = useState(persons)
 
 
-    const addName = (event) => {
-        event.preventDefault()
+    const addName = e => {
+        e.preventDefault()
         const personsArray = persons.map(e => e.name)
         const nameObject = {
             name: newName,
@@ -37,9 +37,8 @@ const App = () => {
         }
     }
 
-    const handleNameChange = (event) => {
-        console.log(event.target.value)
-        setNewName(event.target.value.toLocaleString().toLowerCase())
+    const handleNameChange = e => {
+        setNewName(e.target.value);
     }
 
     const handleNumberChange = (event) => {
@@ -72,7 +71,7 @@ const App = () => {
             </form>
             <h2>Numbers</h2>
             <p>
-                { (filter != "") ? filterPersons.map(person =>
+                { (filter !== "") ? filterPersons.map(person =>
                     <Persons key={person.name} person={person} number={person.number}/>
                     ) : nameToShow.map(person =>
                     <Persons key={person.name} person={person} number={person.number}/>
