@@ -1,16 +1,27 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import Persons from "./components/Persons";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import "./Phonebook.css";
+import axios from "axios";
 
 const App = () => {
-    const [persons, setPersons] = useState([{name: 'Arto Hellas', number: '040-123456'}])
+    const [persons, setPersons] = useState([])
     const [newName, setNewName] = useState('')
     const [showName, setShowName] = useState(true)
     const [newNumber, setNewNumber] = useState('')
     const [filter, setFilter] = useState('')
     const [filterPersons, setFilterPersons] = useState(persons)
+
+    useEffect(() => {
+        axios
+            .get('http://localhost:3001/persons')
+            .then(response => {
+                console.log('fulfilled')
+                console.log(response)
+                setPersons(response.data)
+            })
+    }, [])
 
 
     const addName = (event) => {
@@ -30,7 +41,7 @@ const App = () => {
 
     const handleNameChange = (event) => {
         console.log(event.target.value)
-        setNewName(event.target.value)
+        setNewName(event.target.value.toLocaleString().toLowerCase())
     }
 
     const handleNumberChange = (event) => {
@@ -55,14 +66,16 @@ const App = () => {
         <Filter onChange={handleFilterChange} value={filter}/>
         <h2>Add a new</h2>
         <PersonForm addName={addName} data={addPersonData}/>
-
         <h2>Numbers</h2>
         <p>
-            {(filter !== "") ? filterPersons.map(person => <Persons key={person.name} person={person}
-                                                                    number={person.number}/>) : nameToShow.map(person =>
-                <Persons key={person.name} person={person} number={person.number}/>)}
+            {(filter !== "") ? filterPersons.map(person =>
+                <Persons key={person.name} person={person} number={person.number}/>
+            ) : nameToShow.map(person =>
+                <Persons key={person.name} person={person} number={person.number}/>
+            )}
         </p>
-    </div>)
+    </div>
+    )
 }
 
 export default App
