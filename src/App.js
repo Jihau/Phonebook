@@ -41,7 +41,7 @@ const App = () => {
 
     const handleNameChange = (event) => {
         console.log(event.target.value)
-        setNewName(event.target.value.toLocaleString().toLowerCase())
+        setNewName(event.target.value.toLocaleString())
     }
 
     const handleNumberChange = (event) => {
@@ -50,7 +50,7 @@ const App = () => {
 
     const handleFilterChange = (event) => {
         setFilter(event.target.value)
-        setFilterPersons(persons.filter((person) => (person.name.toLowerCase().indexOf(event.target.value.toLowerCase()) !== -1)))
+        setFilterPersons(persons.filter((person) => (person.name.indexOf(event.target.value.toLowerCase()) !== -1)))
     }
 
 
