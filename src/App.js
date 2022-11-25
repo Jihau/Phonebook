@@ -73,11 +73,13 @@ const addPersonData = {
 
 
 return (<div className="page">
-        <h2>Phonebook</h2>
+        <h2 className='title'>Phonebook</h2>
+    <img alt='phone' src={`https://i.pinimg.com/originals/0b/2f/45/0b2f456e10f9ae3e91e522c1966150e6.png`}/>
+        <h2>Filter contacts</h2>
         <Filter onChange={handleFilterChange} value={filter} type="text"/>
-        <h2>Add a new</h2>
+        <h2>Add a new contact</h2>
         <PersonForm addName={addName} data={addPersonData}/>
-        <h2>Numbers</h2>
+        <h2>Saved numbers</h2>
         <p>
             {(filter !== "") ? filterPersons.map(person =>
                 <Persons key={person.name} person={person}
