@@ -2,8 +2,8 @@ import {useState, useEffect} from 'react'
 import Persons from "./components/Persons";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
+import personService from './services/persons'
 import "./Phonebook.css";
-import axios from "axios";
 
 const App = () => {
     const [persons, setPersons] = useState([])
@@ -14,12 +14,10 @@ const App = () => {
     const [filterPersons, setFilterPersons] = useState(persons)
 
     useEffect(() => {
-        axios
-            .get('http://localhost:3001/persons')
-            .then(response => {
-                console.log('fulfilled')
-                console.log(response)
-                setPersons(response.data)
+        personService
+            .getAll()
+            .then(allPersons => {
+                setPersons(allPersons)
             })
     }, [])
 
@@ -33,49 +31,61 @@ const App = () => {
         if (personsArray.includes(`${nameObject.name}`)) {
             window.confirm(`${newName} is already added to phonebook`)
         } else {
-            setPersons(persons.concat(nameObject))
-            setNewName('')
-            setNewNumber('')
+            personService
+                .create(nameObject)
+                .then(Persons => {
+                    setPersons(persons.concat(nameObject))
+                    setNewName('')
+                    setNewNumber('')
+                })
         }
     }
 
-    const handleNameChange = (event) => {
-        console.log(event.target.value)
-        setNewName(event.target.value.toLocaleString())
+    const deleteName = (person) => {
+        const msg = `Delete ${person.name}?`
+        const confirm = window.confirm(msg)
+        if (confirm) {
+            personService
+                .deletePerson(person.id)
+                .then(persons => setPersons(persons))
+        }
     }
 
-    const handleNumberChange = (event) => {
-        setNewNumber(event.target.value)
-    }
+const handleNameChange = (event) => {
+    console.log(event.target.value)
+    setNewName(event.target.value.toLocaleString())
+}
 
-    const handleFilterChange = (event) => {
-        setFilter(event.target.value)
-        setFilterPersons(persons.filter((person) => (person.name.indexOf(event.target.value.toLowerCase()) !== -1)))
-    }
+const handleNumberChange = (event) => {
+    setNewNumber(event.target.value)
+}
+
+const handleFilterChange = (event) => {
+    setFilter(event.target.value)
+    setFilterPersons(persons.filter((person) => (person.name.toLowerCase().indexOf(event.target.value.toLowerCase()) !== -1)))
+}
+
+const nameToShow = showName ? persons : persons.filter(allPersons => allPersons.important)
+
+const addPersonData = {
+    newName, newNumber, handleNameChange, handleNumberChange
+}
 
 
-    const nameToShow = showName ? persons : persons.filter(person => person.important)
-
-    const addPersonData = {
-        newName, newNumber, handleNameChange, handleNumberChange
-    }
-
-
-    return (<div className="page">
+return (<div className="page">
         <h2>Phonebook</h2>
-        <Filter onChange={handleFilterChange} value={filter}/>
+        <Filter onChange={handleFilterChange} value={filter} type="text"/>
         <h2>Add a new</h2>
         <PersonForm addName={addName} data={addPersonData}/>
         <h2>Numbers</h2>
         <p>
             {(filter !== "") ? filterPersons.map(person =>
-                <Persons key={person.name} person={person} number={person.number}/>
-            ) : nameToShow.map(person =>
-                <Persons key={person.name} person={person} number={person.number}/>
-            )}
+                <Persons key={person.name} person={person}
+                         number={person.number}/>) : nameToShow.map(person =>
+                <Persons key={person.name} person={person} number={person.number}
+                         deleteEntry={() => deleteName(person)}/>)}
         </p>
-    </div>
-    )
+    </div>)
 }
 
 export default App

@@ -2,30 +2,55 @@ body {
     margin: 0;
     color: rgba(193, 201, 203, 0.94);
     background-color: #282c34;
-    font-family: sans-serif, "Calibri Light";
+    font-family: Courier, sans-serif;
+}
+
+h2 {
+    font-family: "Segoe Script", sans-serif;
 }
 
 .page {
     align-items: center;
     display: flex;
-    height: 50vh;
     justify-content: center;
     flex-direction: column;
+    margin-top: 50px;
 }
 
 input {
     color: rgba(193, 201, 203, 0.94);
     background-color: rgba(30, 34, 38, 0.73);
     font-family: sans-serif, "Calibri Light";
+    border-width: 1px;
     border-style: solid;
-    border-color: rgb(31, 43, 47);
+    border-color: rgba(255, 255, 255, 0.2);
+    display: flex;
+    margin: auto;
 }
 
 button {
     display: flex;
     margin: 20px auto 0;
     background-color: #1f2025;
-    color: #a4a9a9;
+    color: rgba(255, 255, 255, 0.36);
     border-color: #393a44;
     border-style: solid;
+}
+
+.people {
+    padding: 4px;
+    display: flex;
+    flex-direction: row;
+    max-width: 200px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.people button {
+    max-height: 22px;
+}
+
+button:hover {
+    color: #282c34;
 }
